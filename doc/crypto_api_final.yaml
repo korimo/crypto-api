@@ -1,0 +1,126 @@
+openapi: 3.0.0
+info:
+  title: Crypto API
+  version: 1.0.2
+  description: REST API na správu kryptomien (vloženie, načítanie, aktualizácia, zmazanie)
+servers:
+  - url: http://localhost:8000
+paths:
+  /:
+    get:
+      summary: Koreňový endpoint (test API)
+      responses:
+        '200':
+          description: API beží
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /cryptos/:
+    get:
+      summary: Získaj všetky kryptomeny
+      responses:
+        '200':
+          description: Zoznam kryptomien
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cryptocurrency'
+    post:
+      summary: Pridaj kryptomenu podľa symbolu (overuje sa cez Coingecko)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CryptocurrencyCreate'
+      responses:
+        '201':
+          description: Kryptomena vytvorená
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cryptocurrency'
+        '400':
+          description: Kryptomena už existuje
+        '404':
+          description: Symbol neexistuje na Coingecko
+
+  /cryptos/{crypto_id}:
+    get:
+      summary: Detail kryptomeny podľa ID
+      parameters:
+        - in: path
+          name: crypto_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Informácie o kryptomene
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cryptocurrency'
+        '404':
+          description: Kryptomena neexistuje
+    put:
+      summary: Aktualizuj kryptomenu z Coingecko podľa ID
+      parameters:
+        - in: path
+          name: crypto_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Kryptomena aktualizovaná
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cryptocurrency'
+        '404':
+          description: Kryptomena neexistuje
+    delete:
+      summary: Vymaž kryptomenu podľa ID
+      parameters:
+        - in: path
+          name: crypto_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Kryptomena bola vymazaná
+        '404':
+          description: Kryptomena neexistuje
+
+components:
+  schemas:
+    Cryptocurrency:
+      type: object
+      properties:
+        id:
+          type: integer
+        symbol:
+          type: string
+        name:
+          type: string
+        coingecko_id:
+          type: string
+        price:
+          type: number
+          format: float
+    CryptocurrencyCreate:
+      type: object
+      properties:
+        symbol:
+          type: string
+      required:
+        - symbol

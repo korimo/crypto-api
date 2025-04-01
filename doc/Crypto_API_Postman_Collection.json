@@ -1,0 +1,116 @@
+{
+  "info": {
+    "name": "Crypto API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "crypto-api-collection"
+  },
+  "item": [
+    {
+      "name": "Get All Coins",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/coins",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "coins"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Add Coin (Valid Symbol)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"symbol\": \"btc\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/api/coins",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "coins"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Coin by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/coins/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "coins",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update Coin by ID",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/coins/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "coins",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete Coin by ID",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/api/coins/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "coins",
+            "1"
+          ]
+        }
+      }
+    }
+  ]
+}
