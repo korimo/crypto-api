@@ -28,7 +28,7 @@ async def add_crypto(symbol_data: schemas.CryptocurrencyCreate, db: Session = De
     if db_crypto:
         raise HTTPException(status_code=400, detail="Cryptocurrency already exists.")
 
-    coin_info = await coingecko.get_coin_info_by_symbol(symbol_data.symbol)
+    coin_info = await coingecko.get_crypto_from_coingecko(symbol_data.symbol)
     if not coin_info:
         raise HTTPException(status_code=404, detail="Cryptocurrency symbol not found on Coingecko.")
 
