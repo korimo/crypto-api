@@ -34,6 +34,18 @@ async def add_crypto(symbol_data: schemas.CryptocurrencyCreate, db: Session = De
 
     return crud.create_crypto(db, coin_info)
 
+@app.put("/cryptos/{symbol}", response_model=schemas.Cryptocurrency)
+async def upd_crypto(symbol_data: schemas.CryptocurrencyCreate, db: Session = Depends(get_db)):
+    db_crypto = crud.get_crypto_by_symbol(db, symbol_data.symbol)
+    if db_crypto:
+        raise HTTPException(status_code=400, detail="Cryptocurrency already exists.")
+
+    coin_info = await coingecko.get_crypto_from_coingecko(symbol_data.symbol)
+    if not coin_info:
+        raise HTTPException(status_code=404, detail="Cryptocurrency symbol not found on Coingecko.")
+
+    return crud.update_crypto(db, coin_info)
+
 @app.get("/cryptos/", response_model=list[schemas.Cryptocurrency])
 def get_all_cryptos(db: Session = Depends(get_db)):
     return crud.get_all_cryptos(db)
