@@ -15,7 +15,7 @@ api documentation
 in doc subdir there is 
 	openapi yaml documentation of the API, and 
 	yaml test collectio for postman
-
+```
 directory tree
 │   .env
 │   .gitignore
@@ -47,3 +47,4 @@ directory tree
 └───doc
         crypto_api.zip
         Crypto_API_Postman_Collection.json
+```
